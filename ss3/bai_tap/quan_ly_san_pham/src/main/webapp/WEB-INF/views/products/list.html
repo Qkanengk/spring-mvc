@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="~{layout/layout :: head}">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<a th:href="@{/products/add}">Thêm sản phẩm</a>
+<table id="customers">
+    <tr>
+        <th>STT</th>
+        <th>Tên sản phẩm</th>
+        <th>Hành động</th>
+    </tr>
+    <tr th:each="product, index:${products}">
+        <td th:text="${index.count}"></td>
+        <td th:text="${product.name}"></td>
+        <td><a th:href="@{/products/view(id=${product.id})}">Xem chi tiết</a>
+            <a th:href="@{/products/update(id=${product.id})}">Chỉnh sửa</a>
+            <a th:href="@{/products/remove(id=${product.id})}">Xóa</a></td>
+
+    </tr>
+</table>
+</body>
+</html>
