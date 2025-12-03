@@ -7,7 +7,6 @@
 <body>
 <form th:action="@{/products/update(id=${product.id})}" th:method="post" th:object="${product}">
     <input th:field="*{name}"  type="text" >
-    <input th:field="*{id}" type="text">
     <input type="submit" value="Update">
 </form>
 

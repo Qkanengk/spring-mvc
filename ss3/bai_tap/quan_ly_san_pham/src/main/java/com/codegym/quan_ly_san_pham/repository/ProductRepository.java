@@ -1,51 +1,51 @@
 package com.codegym.quan_ly_san_pham.repository;
 
 import com.codegym.quan_ly_san_pham.entity.Product;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.TypedQuery;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Repository
+@Transactional
 public class ProductRepository implements IProductRepository {
-    private static final List<Product> products = new ArrayList<>();
 
-    static {
-        products.add(new Product(1, "Táo"));
-        products.add(new Product(2, "Ổi"));
-        products.add(new Product(3, "Xoài"));
-        products.add(new Product(4, "Mận"));
-        products.add(new Product(5, "Đào"));
-        products.add(new Product(6, "Dâu"));
-    }
+    @PersistenceContext
+    private EntityManager entityManager;
 
     @Override
     public List<Product> getAllProducts() {
-        return products;
+        TypedQuery<Product> query = entityManager.createQuery("SELECT p FROM Product p", Product.class);
+        return query.getResultList();
     }
 
     @Override
     public void save(Product product) {
-        products.add(product);
+        entityManager.persist(product);
     }
 
     @Override
     public Product findById(int id) {
-        for (Product product : products) {
-            if (product.getId() == id) return product;
-            //return products.stream().filter(p -> p.getId() == id).findFirst().orElse(null)
-        }
-        return null;
+        return entityManager.find(Product.class, id);
     }
 
     @Override
     public void update(int id, Product product) {
         Product product1 = findById(id);
-        product1.setName(product.getName());
+        if (product1 != null) {
+            product1.setName(product.getName());
+            entityManager.merge(product1);
+        }
     }
 
     @Override
     public void remove(int id) {
-        products.remove(findById(id));
+        Product product = findById(id);
+        if (product != null) {
+            entityManager.remove(product);
+        }
     }
 }
