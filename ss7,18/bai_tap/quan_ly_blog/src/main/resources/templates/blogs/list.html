@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <div th:replace="layout/layout::library"></div>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="container mt-3">
+    <a th:href="@{/blogs/add}" class="btn btn-warning">Create new blog</a>
+    <a th:href="@{/categories}" class="btn btn-warning">Category List</a>
+    <form class="form-control" action="/blogs/search" method="get">
+        <input class="form-control" type="text" name="keyword" th:value="${keyword}" placeholder="Tìm theo tiêu đề...">
+        <select id="category" class="form-control" name="category">
+            <option th:each="category : ${categories}"
+                    th:value="${category.id}"
+                    th:text="${category.name}">
+            </option>
+        </select>
+        <button type="submit" class="btn btn-primary">Tìm</button>
+
+        <a th:href="@{/blogs}" class="btn btn-warning">Xóa lọc</a>
+    </form>
+    <table class="table striped table-bordered">
+        <tr class="table-header">
+            <th>ID</th>
+            <th>Title</th>
+            <th>Category</th>
+            <th>Action</th>
+        </tr>
+        <tr th:each="blog,status : ${blogs}">
+            <td th:text="${status.count}"></td>
+            <td th:text="${blog.title}"></td>
+            <td th:text="${blog.getCategoryName()}"></td>
+            <td>
+                <a th:href="@{/blogs/delete(id=${blog.id})}" class="btn btn-danger">Delete</a>
+                <a th:href="@{/blogs/update(id=${blog.id})}" class="btn btn-primary">Update</a>
+            </td>
+        </tr>
+    </table>
+    <div>
+        <a th:if="${page.hasPrevious()}"
+           th:href="@{/blogs(page=${page.number - 1}, size=${page.size})}">
+            Previous
+        </a>
+
+        <span>Page [[${page.number + 1}]] / [[${page.totalPages}]]</span>
+
+        <a th:if="${page.hasNext()}"
+           th:href="@{/blogs(page=${page.number + 1}, size=${page.size})}">
+            Next
+        </a>
+    </div>
+</div>
+
+</body>
+</html>

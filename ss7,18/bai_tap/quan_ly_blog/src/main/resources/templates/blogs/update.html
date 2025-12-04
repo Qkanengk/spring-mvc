@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <div th:replace="layout/layout::library"></div>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="container mt-3">
+    <h3 class="title">Update blog</h3>
+    <a th:href="@{/blogs}" class="btn btn-warning">Back</a>
+    <form class="form-control" th:object="${blog}" th:action="@{/blogs/update}" method="post">
+        <input id="id" class="form-control" type="hidden" th:field="*{id}"/>
+        <label for="title" class="form-label">Blog's title</label>
+        <input id="title" class="form-control" type="text" th:field="*{title}"/>
+        <label for="content" class="form-label">Blog's content</label>
+        <input id="content" class="form-control" type="text" th:field="*{content}"/>
+        <label for="category" class="form-label">Blog's category</label>
+        <select id="category" class="form-control" th:field="*{category}">
+            <option th:each="category : ${categories}"
+                    th:value="${category.id}"
+                    th:text="${category.name}">
+            </option>
+        </select>
+        <input class="form-control btn btn-primary" type="submit" value="SAVE">
+    </form>
+</div>
+
+</body>
+</html>
