@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+  <script th:src="@{/js/bootstrap.min.js}"></script>
+</head>
+<body>
+<label for="add-form" class="form-label text-info">Update Song</label>
+<form class="form-control" id="add-form" th:object="${song}" th:action="@{/songs/update}" method="post">
+  <input th:type="hidden" th:field="*{id}"/>
+  <label for="name" class="form-label">Song's name</label>
+  <input class="form-control" type="text" id="name" th:field="*{name}">
+  <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span><br>
+  <label for="singer" class="form-label">Artist's name</label>
+  <input class="form-control" type="text" id="singer" th:field="*{singer}">
+  <span th:if="${#fields.hasErrors('singer')}" th:errors="*{singer}"></span><br>
+  <label for="genre" class="form-label">Genre</label>
+  <input class="form-control" type="text" id="genre" th:field="*{genre}">
+  <span th:if="${#fields.hasErrors('genre')}" th:errors="*{genre}"></span><br>
+  <label for="url" class="form-label">URL</label>
+  <input class="form-control" type="text" id="url" th:field="*{url}">
+  <span th:if="${#fields.hasErrors('url')}" th:errors="*{url}"></span><br>
+  <input class="btn btn-success" type="submit" value="Save">
+</form>
+</body>
+</html>
