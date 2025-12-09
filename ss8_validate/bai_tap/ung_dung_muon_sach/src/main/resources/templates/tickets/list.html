@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+</head>
+<body>
+<div class="container mt-3">
+    <a th:href="@{/books}" class="btn btn-success">Back</a>
+
+    <table class="table striped table-bordered">
+        <tr class="table-header">
+            <th>ID</th>
+            <th>Code</th>
+            <th>Status</th>
+            <th>Book</th>
+
+        </tr>
+        <tr th:each="ticket,status : ${tickets}">
+            <td th:text="${status.count}"></td>
+            <td th:text="${ticket.loanCode}"></td>
+            <td th:text="${ticket.status}"></td>
+            <td th:text="${ticket.book.title}"></td>
+            <td>
+                <a th:href="@{/books/view(id=${ticket.book.id})}" class="btn btn-info">Read this book</a>
+                <a th:href="@{/tickets/return(code=${ticket.loanCode})}" class="btn btn-danger">Return this book</a>
+            </td>
+        </tr>
+    </table>
+    <div>
+        <a th:if="${tickets.hasPrevious()}"
+           th:href="@{/tickets(page=${tickets.number - 1}, size=${tickets.size})}">
+            Previous
+        </a>
+        <span>Page [[${tickets.number + 1}]] / [[${tickets.totalPages}]]</span>
+        <a th:if="${tickets.hasNext()}"
+           th:href="@{/tickets(page=${tickets.number + 1}, size=${tickets.size})}">
+            Next
+        </a>
+    </div>
+</div>
+
+</body>
+</html>
