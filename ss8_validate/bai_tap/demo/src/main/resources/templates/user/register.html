@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!-- Use Thymeleaf to resolve static resources served from classpath:/static -->
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+</head>
+<body>
+<label for="register-form" class="form-label">REGISTER</label>
+<form id="register-form" class="form-control" th:object="${user}" th:action="@{/user/register/submit}" th:method="post">
+    <label for="username" class="form-label">Username</label>
+    <!-- make this a proper text input so the form is usable -->
+    <input type="text" id="username" th:field="*{username}" class="form-control">
+    <span class="text-danger" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></span><br>
+    <label for="email">Email</label>
+    <input type="text" id="email" th:field="*{email}" class="form-control">
+    <span class="text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span><br>
+    <label for="password">Password</label>
+    <input type="text" id="password" th:field="*{password}" class="form-control">
+    <span class="text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span><br>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+</body>
+</html>
