@@ -2,6 +2,7 @@ package com.codegym.ung_dung_muon_sach.service;
 
 import com.codegym.ung_dung_muon_sach.entity.Book;
 import com.codegym.ung_dung_muon_sach.entity.Ticket;
+import com.codegym.ung_dung_muon_sach.exception.OutOfStockException;
 import com.codegym.ung_dung_muon_sach.repository.IBookRepository;
 import com.codegym.ung_dung_muon_sach.repository.IRentRepository;
 import org.springframework.data.domain.Page;
@@ -21,10 +22,10 @@ public class RentService implements IRentService {
     }
 
     @Override
-    public boolean rent(Integer bookId) {
+    public boolean rent(Integer bookId) throws Exception {
         Book book = bookRepository.findById(bookId).orElse(null);
-        if (book != null && book.getStock() < 0) {
-            return false;
+        if (book != null && book.getStock() <= 0) {
+           throw new OutOfStockException("Out of stock");
         }
         book.setStock(book.getStock() - 1);
         bookRepository.save(book);

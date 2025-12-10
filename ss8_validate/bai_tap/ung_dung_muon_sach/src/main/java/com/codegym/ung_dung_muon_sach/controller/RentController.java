@@ -19,7 +19,7 @@ public class RentController {
     }
 
     @GetMapping("/rent")
-    public String rent(@RequestParam("id") Integer bookId){
+    public String rent(@RequestParam("id") Integer bookId) throws Exception {
         if(rentService.rent(bookId)){
             System.out.printf("ok");
         }

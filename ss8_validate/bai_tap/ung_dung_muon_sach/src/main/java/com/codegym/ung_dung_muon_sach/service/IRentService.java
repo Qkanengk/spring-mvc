@@ -5,7 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public interface IRentService {
-    boolean rent(Integer bookId);
+    boolean rent(Integer bookId) throws Exception;
 
     boolean returnBook(String loanCode);
 
