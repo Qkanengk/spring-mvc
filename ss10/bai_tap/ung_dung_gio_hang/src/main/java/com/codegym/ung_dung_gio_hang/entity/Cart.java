@@ -23,6 +23,25 @@ public class Cart {
         }
     }
 
+    public void addProduct(Product product, int quantity) {
+        if (products.containsKey(product)) {
+            // Nếu có rồi thì tăng số lượng
+            Integer currentQuantity = products.get(product);
+            products.replace(product, currentQuantity + quantity);
+        } else {
+            // Nếu chưa có thì thêm mới
+            products.put(product, 1);
+        }
+    }
+
+    public void updateQuantity(Product product, int quantity) {
+        if (products.containsKey(product)) {
+            // Nếu có rồi thì tăng số lượng
+            Integer currentQuantity = products.get(product);
+            products.replace(product, quantity);
+        }
+    }
+
     public Map<Product, Integer> getProducts() {
         return products;
     }
@@ -37,6 +56,10 @@ public class Cart {
                 products.remove(product);
             }
         }
+    }
+
+    public void removeProductCompletely(Product product) {
+        products.remove(product);
     }
 
     public Integer countProductQuantity() {

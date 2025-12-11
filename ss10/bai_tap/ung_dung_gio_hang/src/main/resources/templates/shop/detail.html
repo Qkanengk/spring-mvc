@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${product.name}">Product Detail</title>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+    <style>
+        body { background: #f8f9fa; }
+
+        .product-card {
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            border: none;
+            border-radius: 10px;
+            overflow: hidden; /* Để bo góc cả ảnh */
+        }
+
+        /* Phần ảnh bên trái */
+        .product-image-container {
+            background: #fff;
+            height: 100%;
+
+            min-height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .product-image-container img {
+            max-width: 100%;
+            max-height: 500px;
+            border-radius: 28px;
+            object-fit: contain; /* Giữ nguyên tỉ lệ ảnh */
+        }
+
+        /* Phần giá */
+        .price-large {
+            font-size: 2rem;
+            color: #dc3545;
+            font-weight: 700;
+        }
+
+        /* Input số lượng */
+        .quantity-input {
+            max-width: 120px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container py-5">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Home</a></li>
+            <li class="breadcrumb-item"><a href="/products">Shop</a></li>
+            <li class="breadcrumb-item active" aria-current="page" th:text="${product.name}"></li>
+        </ol>
+    </nav>
+
+    <div class="card product-card">
+        <div class="row g-0"> <div class="col-md-6 border-end">
+            <div class="product-image-container">
+                <img th:src="@{${product.image}}"
+                     alt="Product Image">
+            </div>
+        </div>
+
+            <div class="col-md-6">
+                <div class="p-4 p-md-5">
+                    <h1 class="h2 fw-bold text-dark mb-2" th:text="${product.name}">
+
+                    </h1>
+
+                    <div class="mb-3 text-warning">
+                        ★★★★★ <span class="text-muted small">(12 đánh giá)</span>
+                    </div>
+
+                    <div class="mb-3">
+                        <span class="price-large"
+                              th:text="${#numbers.formatDecimal(product.price, 0, 0)} + ' đ'">
+                            25.000.000 đ
+                        </span>
+                    </div>
+
+                    <p class="text-muted mb-4" th:text="${product.description}">
+                    </p>
+
+
+
+                    <form action="/view/details/add" method="get">
+                        <input type="hidden" name="id" th:value="${product.id}">
+
+                        <div class="d-flex align-items-center mb-4">
+                            <label class="me-3 fw-bold">Số lượng:</label>
+
+                            <div class="input-group quantity-input">
+                                <button class="btn btn-outline-secondary" type="button" onclick="decrement()">-</button>
+                                <input type="number" class="form-control text-center" name="quantity" id="qtyInput" value="1" min="1">
+                                <button class="btn btn-outline-secondary" type="button" onclick="increment()">+</button>
+                            </div>
+                        </div>
+                        <div class="d-grid gap-2 d-md-flex">
+                            <button type="submit" class="btn btn-primary btn-lg px-5">
+                                🛒 Thêm vào giỏ
+                            </button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card mt-4 shadow-sm border-0">
+        <div class="card-body">
+            <h4 class="card-title">Chi tiết sản phẩm</h4>
+            <hr>
+            <div >
+                Nội dung bài viết chi tiết, có thể chứa HTML...
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function increment() {
+        var input = document.getElementById('qtyInput');
+        input.value = parseInt(input.value) + 1;
+    }
+    function decrement() {
+        var input = document.getElementById('qtyInput');
+        if (input.value > 1) {
+            input.value = parseInt(input.value) - 1;
+        }
+    }
+</script>
+
+</body>
+</html>

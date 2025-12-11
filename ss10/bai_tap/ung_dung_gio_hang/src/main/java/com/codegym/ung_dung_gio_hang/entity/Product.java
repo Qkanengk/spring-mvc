@@ -21,6 +21,7 @@ public class Product {
     private String name;
     private double price;
     private String description;
+    private String image;
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
