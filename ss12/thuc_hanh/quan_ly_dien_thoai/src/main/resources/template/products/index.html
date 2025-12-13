@@ -3,9 +3,144 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f5f7fa;
+            margin: 0;
+            padding: 40px 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+        }
+
+        /*#add-smartphone {*/
+        /*    display: none;*/
+        /*    width: 400px;*/
+        /*    margin: 30px auto;*/
+        /*    padding: 20px;*/
+        /*    background-color: #ffffff;*/
+        /*    border: 1px solid #ddd;*/
+        /*    border-radius: 8px;*/
+        /*    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);*/
+        /*}*/
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #2980b9;
+            color: white;
+        }
+
+        td {
+            background-color: #ecf0f1;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-top: 4px;
+            margin-bottom: 12px;
+        }
+
+        input[type="submit"], button {
+            background-color: #27ae60;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            font-size: 15px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+
+        button:hover, input[type="submit"]:hover {
+            background-color: #1e8449;
+        }
+
+        .btn {
+            text-align: center;
+        }
+
+        #div-btn {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        #title {
+            display: none;
+            margin-top: 40px;
+            font-size: 24px;
+        }
+
+        #display-create {
+            display: none;
+        }
+
+        #smartphoneList {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .deleteSmartphone {
+            background-color: #e74c3c;
+        }
+
+        .deleteSmartphone:hover {
+            background-color: #c0392b;
+        }
+    </style>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="../../static/js/index.js"></script>
 </head>
 <body>
+<form id="add-smartphone">
+    <h1>Create New Smartphone</h1>
+    <input type="hidden" name="id" id="id" value="${product.id}">
+    <label for="producer">Producer:</label>
+    <input type="text" id="producer" placeholder="e.g. Apple">
 
+    <label for="model">Model:</label>
+    <input type="text" id="model" placeholder="e.g. iPhone 15">
+
+    <label for="price">Price:</label>
+    <input type="text" id="price" placeholder="e.g. 999">
+
+    <input type="button" id="add-btn" value="Add" onclick="addProduct()">
+    <input type="button" hidden="hidden" id="update-btn" value="Update" onclick="updateProduct()">
+</form>
+
+<h2>Products List</h2>
+<table>
+    <thead>
+    <tr>
+        <td>#</td>
+        <td>Model</td>
+        <td>Producer</td>
+        <td>Price</td>
+        <td>Action Name</td>
+    </tr>
+    </thead>
+    <tbody id="content">
+    </tbody>
+</table>
 </body>
 </html>

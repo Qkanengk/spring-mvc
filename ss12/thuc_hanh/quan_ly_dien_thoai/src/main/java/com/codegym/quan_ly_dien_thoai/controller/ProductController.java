@@ -7,7 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/v1/products")
 public class ProductController {
@@ -22,6 +22,15 @@ public class ProductController {
         Page<Product> page = productService.findAll(pageable);
         if (page != null) {
             return ResponseEntity.ok().body(page);
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+    @PutMapping("")
+    public ResponseEntity<Product> findById(@RequestParam("id") Integer id) {
+        Product product = productService.findById(id);
+        if (product != null) {
+            return ResponseEntity.ok().body(product);
         }
         return ResponseEntity.notFound().build();
     }
