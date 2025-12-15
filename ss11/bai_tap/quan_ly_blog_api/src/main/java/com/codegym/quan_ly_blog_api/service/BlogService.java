@@ -34,6 +34,11 @@ public class BlogService implements IBlogService {
     }
 
     @Override
+    public Page<BlogResponseDTO> search(Pageable pageable, String keyword, Integer categoryId) {
+        return blogRepository.search(pageable, keyword, categoryId).map(blogMapper::toResponseDTO);
+    }
+
+    @Override
     public BlogResponseDTO findById(int id) {
         return blogMapper.toResponseDTO(blogRepository.findById(id).orElse(null));
     }

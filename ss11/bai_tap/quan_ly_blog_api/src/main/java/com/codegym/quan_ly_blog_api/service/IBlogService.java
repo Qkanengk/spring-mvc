@@ -10,9 +10,15 @@ public interface IBlogService {
     Page<BlogResponseDTO> findAll(Pageable pageable);
 
     Page<BlogResponseDTO> findAllByCategoryId(Pageable pageable, int id);
+
+    Page<BlogResponseDTO> search(Pageable pageable, String keyword, Integer categoryId);
+
     BlogResponseDTO findById(int id);
+
     Blog findByIdUpdate(int id);
+
     void save(Blog blog);
+
     void remove(int id);
 
     void update(Integer id, BlogCreationRequestDTO blog);

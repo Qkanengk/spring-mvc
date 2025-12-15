@@ -16,7 +16,7 @@ public interface BlogMapper {
 
     List<BlogResponseDTO> toResponseList(List<Blog> blogList);
 
-    @Mapping(target = "id", ignore = true) // Tạo mới thì không map ID
-    @Mapping(source = "categoryId", target = "category.id") // Category sẽ set thủ công trong Service sau
-    Blog toEntity(BlogCreationRequestDTO request);
+//    @Mapping(target = "id", ignore = true) // Tạo mới thì không map ID
+//    @Mapping(source = "categoryId", target = "category.id") // Category sẽ set thủ công trong Service sau
+//    Blog toEntity(BlogCreationRequestDTO request);
 }

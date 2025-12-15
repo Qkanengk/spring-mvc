@@ -10,6 +10,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class BlogResponseDTO {
+    private Integer id;
     private String title;
     private String content;
     private Integer categoryId;
