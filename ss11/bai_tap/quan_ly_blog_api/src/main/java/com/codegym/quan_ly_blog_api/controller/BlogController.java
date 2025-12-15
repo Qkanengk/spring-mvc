@@ -1,5 +1,6 @@
 package com.codegym.quan_ly_blog_api.controller;
 
+import com.codegym.quan_ly_blog_api.dto.BlogCreationRequestDTO;
 import com.codegym.quan_ly_blog_api.dto.BlogResponseDTO;
 import com.codegym.quan_ly_blog_api.entity.Blog;
 import com.codegym.quan_ly_blog_api.service.IBlogService;
@@ -22,6 +23,12 @@ public class BlogController {
 
     public BlogController(IBlogService blogService) {
         this.blogService = blogService;
+    }
+
+    @PostMapping("/update/{id}")
+    public ResponseEntity<Void> updateBlog(@PathVariable("id") Integer id, @RequestBody Blog blogCreationRequestDTO) {
+        blogService.update(id, blogCreationRequestDTO);
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping("")
@@ -55,6 +62,11 @@ public class BlogController {
     @PostMapping("")
 
     public ResponseEntity<Void> save(@RequestBody Blog blog) {
+        blogService.save(blog);
+        return ResponseEntity.ok().build();
+    }
+
+    public ResponseEntity<Void> pudate(@RequestBody Blog blog) {
         blogService.save(blog);
         return ResponseEntity.ok().build();
     }

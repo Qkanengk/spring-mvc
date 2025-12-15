@@ -1,4 +1,6 @@
+let isSearching = false;
 const display = (page) => {
+    isSearching = false;
     $.ajax({
         url: 'http://localhost:8080/api/v1/blogs?page=' + page,
         type: 'GET',
@@ -16,16 +18,7 @@ const display = (page) => {
             `)
             );
             $("#content").html(content);
-
-            let pages = "";
-            for (let i = 0; i < blogs.totalPages; i++) {
-                pages += `
-                    <li class="page-item">
-                        <a class="page-link" onclick="display(${i})">${i + 1}</a>
-                    </li>
-                `;
-            }
-            $("#pagination").html(pages);
+            renderPagination(blogs);
         }
     });
 }
@@ -67,18 +60,56 @@ const showUpdate = (id) => {
         method: 'get',
         success: (blog) => {
             showCreateForm();
+            $('#blogId').val(blog.id);
             $('#title').val(blog.title);
             $('#contentBlog').val(blog.content);
             $('#category').val(blog.categoryId);
             $('#create-button').hide();
+            $('#create-save-btn').hide();
+            $('#update-save-btn').show();
         }
     })
 }
 
 const showCreateForm = () => {
+    $('#blogId').val('');
+    $('#title').val('');
+    $('#contentBlog').val('');
+    $('#category').val('');
     $('#create-form').toggle();
+    $('#create-button').hide();
+    $('#create-save-btn').show();
+    $('#update-save-btn').hide();
 }
+const updateBlog = () => {
+    let id = $('#blogId').val();
+    let title = $('#title').val();
+    let content = $('#contentBlog').val();
+    let categoryId = $('#category').val();
 
+    let blog = {
+        id: id,
+        title: title,
+        content: content,
+        category: {
+            id: categoryId
+        }
+    };
+    $.ajax({
+        url: `http://localhost:8080/api/v1/blogs/update/${id}`,
+        method: 'post',
+        contentType: 'application/json',
+        data: JSON.stringify(blog),
+        success: () => {
+            alert('Blog update successfully');
+            display(0);
+            $('#create-form').hide();
+            $('#title').val('');
+            $('#contentBlog').val('');
+            $('#category').val('');
+        }
+    })
+}
 const createBlog = () => {
     let title = $('#title').val();
     let content = $('#contentBlog').val();
@@ -107,11 +138,12 @@ const createBlog = () => {
     })
 }
 
-const search = () => {
+const search = (page) => {
+    isSearching = true;
     let keyword = $('#keyword').val();
     let categoryId = $('#categoryId').val();
     $.ajax({
-        url: `http://localhost:8080/api/v1/blogs/search?keyword=${keyword}&categoryId=${categoryId}`,
+        url: `http://localhost:8080/api/v1/blogs/search?page=${page}&keyword=${keyword}&categoryId=${categoryId}`,
         method: 'get',
         dataType: 'json',
         success: (blogs) => {
@@ -128,16 +160,34 @@ const search = () => {
             );
             $("#content").html(content);
 
-            let pages = "";
-            for (let i = 0; i < blogs.totalPages; i++) {
-                pages += `
-                    <li class="page-item">
-                        <a class="page-link" onclick="display(${i})">${i + 1}</a>
-                    </li>
-                `;
-            }
-            $("#pagination").html(pages);
+            renderPagination(blogs);
+
         }
     })
 
 }
+
+const renderPagination = (blogs) => {
+    let pages = '';
+    for (let i = 0; i < blogs.totalPages; i++) {
+        pages += `
+            <li class="page-item ${i === blogs.number ? 'active' : ''}">
+                <a class="page-link" data-page="${i}">${i + 1}</a>
+            </li>
+        `;
+    }
+    $('#pagination').html(pages);
+};
+$(document).ready(function () {
+    $('#pagination').on('click', '.page-link', function () {
+        const page = $(this).data('page');
+
+        if (isSearching) {
+            search(page);
+        } else {
+            display(page);
+        }
+    });
+
+    display(0);
+});

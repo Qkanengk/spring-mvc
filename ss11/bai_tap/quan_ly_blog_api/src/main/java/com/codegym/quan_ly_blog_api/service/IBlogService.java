@@ -21,5 +21,5 @@ public interface IBlogService {
 
     void remove(int id);
 
-    void update(Integer id, BlogCreationRequestDTO blog);
+    void update(Integer id, Blog blog);
 }

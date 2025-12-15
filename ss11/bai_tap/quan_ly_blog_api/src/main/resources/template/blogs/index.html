@@ -11,6 +11,7 @@
 <div class="container py-5">
     <div class="col-6 d-flex">
         <form id="create-form" class="form-control" style="display: none">
+            <input type="hidden" name="blogId" id="blogId">
             <div class="mb-3 ">
                 <label for="title" class="form-label">Title</label>
                 <input type="text" class="form-control" id="title" name="title">
@@ -25,7 +26,8 @@
 
                 </select>
             </div>
-            <button type="button" class="btn btn-primary" onclick="createBlog()">Save</button>
+            <button type="button" id="create-save-btn" class="btn btn-primary" onclick="createBlog()">Save</button>
+            <button style="display: none" type="button" id="update-save-btn" class="btn btn-primary" onclick="updateBlog()">Update</button>
         </form>
         <form class="col-6">
             <div class="mb-3 d-flex justify-content-between ">
@@ -35,6 +37,7 @@
                 <select class="form-select" id="categoryId" name="categoryId">
                 </select>
                 <button type="button" class="btn btn-primary" onclick="search()">Search</button>
+                <button type="button" class="btn btn-primary" onclick="display(0)">Reset</button>
             </div>
 
         </form>

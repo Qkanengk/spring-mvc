@@ -59,12 +59,12 @@ public class BlogService implements IBlogService {
     }
 
     @Override
-    public void update(Integer id, BlogCreationRequestDTO blog) {
+    public void update(Integer id, Blog blog) {
         Blog blog1 = findByIdUpdate(id);
         if (blog1 != null) {
             blog1.setTitle(blog.getTitle());
             blog1.setContent(blog.getContent());
-            blog1.setCategory(categoryRepository.findById(blog.getCategoryId()).orElse(null));
+            blog1.setCategory(blog.getCategory());
             blogRepository.save(blog1);
         }
     }
